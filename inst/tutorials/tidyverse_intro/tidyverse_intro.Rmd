@@ -1,0 +1,465 @@
+---
+title: "Intro to the Tidyverse"
+output: 
+  learnr::tutorial:
+    progressive: true
+runtime: shiny_prerendered
+---
+
+
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(babynames)
+library(palmerpenguins)
+
+tutorial_options(
+  exercise.cap = NULL,
+  exercise.eval = FALSE,
+  exercise.timelimit = 300,
+  exercise.lines = NULL,
+  exercise.pipe = "%>%",
+  exercise.blanks = NULL,
+  exercise.checker = NULL,
+  exercise.error.check.code = NULL,
+  exercise.completion = FALSE,
+  exercise.diagnostics = TRUE,
+  exercise.startover = TRUE,
+  exercise.reveal_solution = TRUE
+)
+
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+```{r, eval = FALSE, include = FALSE}
+
+#' rules
+#' it's supposed to be hard
+#' talk to your neighbors
+#' ask for me help
+#' ask google, cheatsheets
+#' more to come
+
+```
+
+
+## (A) Introduction
+
+### Your Turn A1
+
+R can be used as a calculator. Use the `Run Code` button to see what happens. Then:
+
+  - To run specific lines, highlight that line(s) and click `Run Code`. Give it a try!
+  - Now try putting in new numbers to do your own math.
+
+```{r yourturna1, exercise = TRUE}
+1 + 2
+2 * 3
+8 / 4
+
+```
+
+### Your Turn A2
+
+View the `mpg` data set by running the code below. Once you run the code, scroll to the right to see additional columns, and click the numbers on the bottom to see additional rows.
+
+```{r yourturna2, exercise = TRUE}
+mpg
+
+```
+
+
+## (B) Visualization
+
+### Your Turn B1
+
+Run the code on the slide to make a graph. Pay strict attention to spelling, capitalization, and parentheses!
+
+```{r yourturnb1, exercise = TRUE}
+
+```
+
+```{r yourturnb1-solution}
+
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))
+
+
+```
+
+### Your Turn B2
+
+Add `color`, `size`, `alpha`, and `shape` aesthetics to your graph. Experiment.  
+
+```{r yourturnb2, exercise = TRUE}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))
+
+```
+
+
+### Your Turn B3
+
+Replace this scatterplot with one that draws boxplots. Use the cheatsheet. Try your best guess.
+
+```{r yourturnb3, exercise = TRUE}
+ggplot(mpg) + 
+  geom_point(aes(class, hwy))
+
+```
+
+```{r yourturnb3-solution}
+
+ggplot(data = mpg) +
+  geom_boxplot(mapping = aes(x = class, y = hwy))
+
+```
+
+### Your Turn B4
+
+Make a histogram of the `hwy` variable from `mpg`.
+
+```{r yourturnb4, exercise = TRUE}
+
+```
+
+```{r yourturnb4-solution}
+
+ggplot(data = mpg) +
+  geom_histogram(mapping = aes(x = hwy))
+
+
+```
+
+### Your Turn B5
+
+Make a density plot of `hwy` colored by `class`.
+
+```{r yourturnb5, exercise = TRUE}
+
+
+```
+
+```{r yourturnb5-solution}
+ggplot(data = mpg) +
+  geom_density(mapping = aes(x = hwy, color = class))
+
+```
+
+### Your Turn B6
+
+Make a bar chart `hwy` colored by `class`.
+
+```{r yourturnb6, exercise = TRUE}
+
+```
+
+```{r yourturnb6-solution}
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = class, fill = class))
+
+
+```
+
+### Your Turn B7
+
+Predict what this code will do. Then run it.
+
+```{r yourturnb7, exercise = TRUE}
+ggplot(mpg) + 
+  geom_point(aes(displ, hwy)) +
+  geom_smooth(aes(displ, hwy))
+
+```
+
+## (C) Transformation
+
+### Your Turn C1
+
+Alter the code to select just the `n` column:
+
+```{r yourturnc1, exercise = TRUE}
+select(babynames, name, prop)
+
+```
+
+```{r yourturnc1-solution}
+select(babynames, n)
+```
+
+### Quiz 1
+
+Which of these is NOT a way to select the `name` and `n` columns together?
+
+```{r quiz, exercise = TRUE}
+select(babynames, -c(year, sex, prop))
+select(babynames, name:n)
+select(babynames, starts_with("n"))
+select(babynames, ends_with("n"))
+
+```
+
+### Your Turn C2
+
+Produce three different data sets that show:
+
+* All of the names where prop is greater than or equal to 0.08  
+* All of the children named "Sea"  
+* All of the names that have a missing value for `n`  
+
+```{r yourturnc2, exercise = TRUE}
+filter(babynames, is.na(n))
+
+```
+
+```{r yourturnc2-solution}
+
+filter(babynames, prop >= 0.08)
+filter(babynames, name == "Sea")
+filter(babynames, is.na(n))
+
+
+```
+
+### Your Turn C3
+
+Use Boolean operators to alter the code below to make three different datasets that return only the rows that contain:
+
+* Girls named Sea  
+* Names that were used by exactly 5 or 6 children in 1880  
+* Names that are one of Acura, Lexus, or Yugo
+
+```{r yourturnc3, exercise = TRUE}
+filter(babynames, name == "Sea" | name == "Anemone")
+
+```
+
+```{r yourturnc3-solution}
+filter(babynames, name == "Sea", sex == "F")
+filter(babynames, n == 5 | n == 6, year == 1880)
+filter(babynames, name %in% c("Acura", "Lexus", "Yugo"))
+```
+
+### Your Turn C4
+
+Arrange babynames by `n`. Add `prop` as a second (tie breaking) variable to arrange on. Can you tell what the smallest value of `n` is?
+
+```{r yourturnc4, exercise = TRUE}
+
+```
+
+```{r yourturnc4-solution}
+arrange(babynames, n, prop)
+```
+
+### Your Turn C5
+
+Use `desc()` to find the names with the highest prop.
+Then, use `desc()` to find the names with the highest n.
+
+```{r yourturnc5, exercise = TRUE}
+
+```
+
+```{r yourturnc5-solution}
+arrange(babynames, desc(prop))
+arrange(babynames, desc(n))
+```
+
+### Your Turn C6
+
+Use `%>%` to write a sequence of functions that returns a single dataset to: 
+
+1. Filter babynames to just the girls that were born in 2015  
+2. Select the `name` and `n` columns  
+3. Arrange the results so that the most popular names are near the top
+
+```{r yourturnc6, exercise = TRUE}
+
+```
+
+```{r yourturnc6-solution}
+babynames %>% 
+  filter(year == 2015, sex == "F") %>% 
+  select(name, n) %>% 
+  arrange(desc(n))
+```
+
+
+### Exam 1
+
+1. Filter `babynames` to just the rows that contain a `name` and `sex` combination name you're interested in. For example, females named Summer.  
+2. Trim the result to just the columns that will appear in your graph (not strictly necessary, but useful practice)  
+3. Plot the results as a line graph with `year` on the x axis and `prop` on the y axis
+
+```{r exam1, exercise = TRUE}
+
+```
+
+```{r exam1-solution}
+babynames %>% 
+  filter(name == "Arie", sex == "M") %>%
+  select(year, prop) %>%
+  ggplot() +
+  geom_line(mapping = aes(year, prop))
+
+```
+
+### Your Turn C7
+
+Use summarise() to compute three statistics about the data:
+
+1. The first (minimum) year in the dataset  
+2. The last (maximum) year in the dataset  
+3. The total number of children represented in the data
+
+```{r yourturnc7, exercise = TRUE}
+
+```
+
+```{r yourturnc7-solution}
+babynames %>% 
+  summarise(
+    first = min(year), 
+    last = max(year), 
+    total = sum(n)
+    )
+```
+
+### Your Turn C8
+
+Extract the rows where `name == "Khaleesi"`. Then use `summarise()` and a summary functions to find:
+
+1. The total number of children named Khaleesi
+2. The first year Khaleesi appeared in the data
+
+```{r yourturnc8, exercise = TRUE}
+
+```
+
+```{r yourturnc8-solution}
+babynames %>% 
+  filter(name == "Khaleesi") %>% 
+  summarise(
+    total = sum(n), 
+    first = min(year)
+    )
+```
+
+### Your Turn C9
+
+Use `group_by()`, `summarise()`, and `arrange()` to display the ten most popular names. Compute popularity as the total number of children of a single gender given a name.
+
+```{r yourturnc9, exercise = TRUE}
+
+```
+
+```{r yourturnc9-solution}
+babynames %>%
+  group_by(name, sex) %>% 
+  summarise(total = sum(n)) %>% 
+  arrange(desc(total))
+```
+
+### Your Turn C10
+
+Use grouping to calculate and then plot the number of children born each year over time.
+
+```{r yourturnc10, exercise = TRUE}
+
+```
+
+```{r yourturnc10-solution}
+babynames %>%
+  group_by(year) %>% 
+  summarise(n_children = sum(n)) %>% 
+  ggplot() +
+  geom_line(mapping = aes(x = year, y = n_children))
+```
+
+### Your Turn C11
+
+Use `min_rank()` and `mutate()` to rank each row in `babynames` from largest `prop` to lowest `prop`.
+
+```{r yourturnc11, exercise = TRUE}
+
+```
+
+```{r yourturnc11-solution}
+babynames %>% 
+  mutate(rank = min_rank(desc(prop)))
+```
+
+### Your Turn C12
+
+Using `mutate()`, compute each name's rank by `prop` _within its year and sex_. 
+Then, using `summarize()` compute the median rank _for each combination of name and sex_, and arrange the results from highest median rank to lowest.
+
+Hint: Mary should be the first name in your result.
+
+```{r yourturnc12, exercise = TRUE}
+
+```
+
+```{r yourturnc12-solution}
+babynames %>% 
+  group_by(year, sex) %>% 
+  mutate(rank = min_rank(desc(prop))) %>% 
+  group_by(name, sex) %>% 
+  summarise(score = median(rank)) %>% 
+  arrange(score)
+```
+
+## (D) Explore on Your Own
+
+Some example questions:
+
+  - How has the popularity of your name changed?
+  - Which names have become more or less popular over time?
+  - What happens when someone with a relatively rare becomes very famous (e.g., "Lebron" around 2003)?
+  
+You can also try to change the non-data, visual elements of a plot you make. For example:
+
+  - Change the x, y, title, and subtitles.
+  - Change the color of your background or the appearance of the gridlines
+  - Try adding `theme_minimal()` to your plot. What other built-in themes are there?
+  
+Also, there are other data sets you can try exploring. For example:
+
+  - `penguins`*
+  - `diamonds`
+  - `mtcars`
+
+*This data set contains `NA`s. Can you figure out how math on `NA`'s works (or rather, doesn't) in R?
+  
+### Explore
+  
+```{r explore1, exercise = TRUE}
+
+
+
+
+```
+
+```{r explore1-solution}
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point(aes(
+    color = species, 
+    shape = species
+    ),
+    size = 2
+    ) + 
+  geom_smooth(method = "lm", se = FALSE, aes(color = species)) +
+  scale_color_manual(values = c("darkorange","darkorchid","cyan4")) +
+  theme_minimal() +
+  labs(
+    x = "Bill Length (mm)",
+    y = "Bill Depth (mm)",
+    color = "Species",
+    title = "Can You Spot Simpson's Paradox?",
+    subtitle = "Palmer Penguins Bill Length vs. Bill Depth"
+        ) +
+  guides(shape = "none")
+```
+
