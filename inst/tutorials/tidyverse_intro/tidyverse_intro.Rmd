@@ -1,11 +1,11 @@
 ---
-title: "NSU Summer Research Workshop: Data Science in R and the Tidyverse"
+title: "NSF Summer Research Program: Data Science in R and the Tidyverse"
+runtime: shiny_prerendered
 output: 
   learnr::tutorial:
     progressive: true
-runtime: shiny_prerendered
+    allow_skip: true
 ---
-
 
 
 ```{r setup, include=FALSE}
@@ -29,7 +29,7 @@ tutorial_options(
   exercise.reveal_solution = TRUE
 )
 
-knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE,   allow_skip = TRUE)
 ```
 
 ```{r, eval = FALSE, include = FALSE}
@@ -39,14 +39,15 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 #' talk to your neighbors
 #' ask for me help
 #' ask google, cheatsheets
-#' more to come
+#' save link somewhere
+#' finding information
 
 ```
 
 
 ## (A) Introduction
 
-### Your Turn A1
+### Your Turn A1 {data-continue-text="Continue to A2"}
 
 R can be used as a calculator. Use the `Run Code` button to see what happens. Then:
 
@@ -60,9 +61,9 @@ R can be used as a calculator. Use the `Run Code` button to see what happens. Th
 
 ```
 
-### Your Turn A2
+### Your Turn A2 {data-continue-text="Continue to B1 When Prompted by Instructor"}
 
-View the `mpg` data set by running the code below. Once you run the code, scroll to the right to see additional columns, and click the numbers on the bottom to see additional rows.
+View the `mpg` data set by running the code below. Once you run the code, use the arrow on the top right of the data to scroll to the right to see additional columns, and click the numbers on the bottom to see additional rows.
 
 ```{r yourturna2, exercise = TRUE}
 mpg
@@ -72,7 +73,7 @@ mpg
 
 ## (B) Visualization
 
-### Your Turn B1
+### Your Turn B1 {data-continue-text="Continue to B2 When Prompted by Instructor"}
 
 Run the code on the slide to make a graph. Pay strict attention to spelling, capitalization, and parentheses!
 
@@ -88,24 +89,24 @@ ggplot(data = mpg) +
 
 ```
 
-### Your Turn B2
+### Your Turn B2 {data-continue-text="Continue to B3 When Prompted by Instructor"}
 
-Add `color`, `size`, `alpha`, and `shape` aesthetics to your graph. Experiment.  
+Replace the ____ to add `color`, `size`, `alpha`, or `shape` aesthetics to your graph. Experiment.  
 
 ```{r yourturnb2, exercise = TRUE}
 ggplot(data = mpg) +
-  geom_point(mapping = aes(x = displ, y = hwy))
+  geom_point(mapping = aes(x = displ, y = hwy, _____ = class))
 
 ```
 
 
-### Your Turn B3
+### Your Turn B3 {data-continue-text="Continue to B4 When Prompted by Instructor"}
 
 Replace this scatterplot with one that draws boxplots. Use the cheatsheet. Try your best guess.
 
 ```{r yourturnb3, exercise = TRUE}
-ggplot(mpg) + 
-  geom_point(aes(class, hwy))
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = class, y = hwy))
 
 ```
 
@@ -116,11 +117,16 @@ ggplot(data = mpg) +
 
 ```
 
-### Your Turn B4
+### Your Turn B4 {data-continue-text="Continue to B5 When Prompted by Instructor"}
 
-Make a histogram of the `hwy` variable from `mpg`.
+Replace the ____s to make a histogram of the `hwy` variable from `mpg`.
+
+Hint: Do not supply a `y` variable.
 
 ```{r yourturnb4, exercise = TRUE}
+
+ggplot(data = mpg) +
+  geom_____(mapping = aes(x = ____))
 
 ```
 
@@ -132,12 +138,14 @@ ggplot(data = mpg) +
 
 ```
 
-### Your Turn B5
+### Your Turn B5 {data-continue-text="Continue to B6 When Prompted by Instructor"}
 
-Make a density plot of `hwy` colored by `class`.
+Replace the ____s to make a density plot of `hwy` colored by `class`.
 
 ```{r yourturnb5, exercise = TRUE}
 
+ggplot(data = mpg) +
+  geom_____(mapping = aes(x = ____, color = ____))
 
 ```
 
@@ -147,22 +155,26 @@ ggplot(data = mpg) +
 
 ```
 
-### Your Turn B6
+### Your Turn B6 {data-continue-text="Continue to B7 When Prompted by Instructor"}
 
-Make a bar chart `hwy` colored by `class`.
+Using the `mpg` data, replace the ____s to make a bar chart of `class` colored by `trans`.
 
 ```{r yourturnb6, exercise = TRUE}
+
+ggplot(data = ____) +
+  geom_bar(mapping = aes(x = class, ____ = trans))
 
 ```
 
 ```{r yourturnb6-solution}
+
 ggplot(data = mpg) +
-  geom_bar(mapping = aes(x = class, fill = class))
+  geom_bar(mapping = aes(x = class, fill = trans))
 
 
 ```
 
-### Your Turn B7
+### Your Turn B7 {data-continue-text="Continue to C1 When Prompted by Instructor"}
 
 Predict what this code will do. Then run it.
 
@@ -175,7 +187,7 @@ ggplot(mpg) +
 
 ## (C) Transformation
 
-### Your Turn C1
+### Your Turn C1 {data-continue-text="Continue to Quiz 1 When Prompted by Instructor"}
 
 Alter the code to select just the `n` column:
 
@@ -188,7 +200,7 @@ select(babynames, name, prop)
 select(babynames, n)
 ```
 
-### Quiz 1
+### Quiz 1 {data-continue-text="Continue to C2 When Prompted by Instructor"}
 
 Which of these is NOT a way to select the `name` and `n` columns together?
 
@@ -200,13 +212,15 @@ select(babynames, ends_with("n"))
 
 ```
 
-### Your Turn C2
+### Your Turn C2 {data-continue-text="Continue to C3 When Prompted by Instructor"}
 
 Produce three different data sets that show:
 
 * All of the names where prop is greater than or equal to 0.08  
 * All of the children named "Sea"  
 * All of the names that have a missing value for `n`  
+
+Hint: The last one should return an empty data set.
 
 ```{r yourturnc2, exercise = TRUE}
 filter(babynames, is.na(n))
@@ -222,13 +236,14 @@ filter(babynames, is.na(n))
 
 ```
 
-### Your Turn C3
+### Your Turn C3 {data-continue-text="Continue to C4 When Prompted by Instructor"}
 
 Use Boolean operators to alter the code below to make three different datasets that return only the rows that contain:
 
 * Girls named Sea  
 * Names that were used by exactly 5 or 6 children in 1880  
 * Names that are one of Acura, Lexus, or Yugo
+
 
 ```{r yourturnc3, exercise = TRUE}
 filter(babynames, name == "Sea" | name == "Anemone")
@@ -241,7 +256,7 @@ filter(babynames, n == 5 | n == 6, year == 1880)
 filter(babynames, name %in% c("Acura", "Lexus", "Yugo"))
 ```
 
-### Your Turn C4
+### Your Turn C4 {data-continue-text="Continue to C5 When Prompted by Instructor"}
 
 Arrange babynames by `n`. Add `prop` as a second (tie breaking) variable to arrange on. Can you tell what the smallest value of `n` is?
 
@@ -253,10 +268,11 @@ Arrange babynames by `n`. Add `prop` as a second (tie breaking) variable to arra
 arrange(babynames, n, prop)
 ```
 
-### Your Turn C5
+### Your Turn C5 {data-continue-text="Continue to C6 When Prompted by Instructor"}
 
-Use `desc()` to find the names with the highest prop.
-Then, use `desc()` to find the names with the highest n.
+Use `arrange()`  and `desc()` to find the names with the highest prop.
+
+Then, use `arrange()` and to find the names with the highest n.
 
 ```{r yourturnc5, exercise = TRUE}
 
@@ -267,16 +283,20 @@ arrange(babynames, desc(prop))
 arrange(babynames, desc(n))
 ```
 
-### Your Turn C6
+### Your Turn C6 {data-continue-text="Continue to Exam 1 When Prompted by Instructor"}
 
-Use `%>%` to write a sequence of functions that returns a single dataset to: 
+Replace the ____s and use `%>%` to write a sequence of functions that returns a single dataset to: 
 
 1. Filter babynames to just the girls that were born in 2015  
 2. Select the `name` and `n` columns  
 3. Arrange the results so that the most popular names are near the top
 
-```{r yourturnc6, exercise = TRUE}
 
+```{r yourturnc6, exercise = TRUE}
+babynames %>% 
+  filter(year == ____, sex == "____") ____
+  select(____, n) %>% 
+  ____(desc(____))
 ```
 
 ```{r yourturnc6-solution}
@@ -287,11 +307,11 @@ babynames %>%
 ```
 
 
-### Exam 1
+### Exam 1 {data-continue-text="Continue to C7 When Prompted by Instructor"}
 
 1. Filter `babynames` to just the rows that contain a `name` and `sex` combination name you're interested in. For example, females named Summer.  
 2. Trim the result to just the columns that will appear in your graph (not strictly necessary, but useful practice)  
-3. Plot the results as a line graph with `year` on the x axis and `prop` on the y axis
+3. As a bonus, pipe the the results to a ggplot and plot as a line graph with `year` on the x axis and `prop` on the y axis
 
 ```{r exam1, exercise = TRUE}
 
@@ -306,16 +326,21 @@ babynames %>%
 
 ```
 
-### Your Turn C7
+### Your Turn C7 {data-continue-text="Continue to C8 When Prompted by Instructor"}
 
-Use summarise() to compute three statistics about the data:
+Replace the ____s and use summarise() to compute three statistics about the `babynames` data:
 
 1. The first (minimum) year in the dataset  
 2. The last (maximum) year in the dataset  
 3. The total number of children represented in the data
 
 ```{r yourturnc7, exercise = TRUE}
-
+____ %>% 
+  summarize(
+    first = ____(year), 
+    last = max(year), 
+    ____ = sum(n)
+    )
 ```
 
 ```{r yourturnc7-solution}
@@ -327,9 +352,9 @@ babynames %>%
     )
 ```
 
-### Your Turn C8
+### Your Turn C8 {data-continue-text="Continue to C9 When Prompted by Instructor"}
 
-Extract the rows where `name == "Khaleesi"`. Then use `summarise()` and a summary functions to find:
+Use the `%>%` to write a sequence of functions that extracts the rows where `name == "Khaleesi"`. Then use `summarise()` and summary functions to find:
 
 1. The total number of children named Khaleesi
 2. The first year Khaleesi appeared in the data
@@ -347,9 +372,9 @@ babynames %>%
     )
 ```
 
-### Your Turn C9
+### Your Turn C9 {data-continue-text="Continue to C10 When Prompted by Instructor"}
 
-Use `group_by()`, `summarise()`, and `arrange()` to display the ten most popular names. Compute popularity as the total number of children of a single gender given a name.
+Use `group_by()`, `summarise()`, and `arrange()` to display the data sorted by the most popular names. Compute popularity as the total number of children of a single gender given a name.
 
 ```{r yourturnc9, exercise = TRUE}
 
@@ -362,9 +387,11 @@ babynames %>%
   arrange(desc(total))
 ```
 
-### Your Turn C10
+### Your Turn C10 {data-continue-text="Continue to C11 When Prompted by Instructor"}
 
-Use grouping to calculate and then plot the number of children born each year over time.
+Use grouping to calculate  the number of children born each year over time.
+
+Use the `%>%` to pipe the results to a plot to make a line plot showing the changes over time.
 
 ```{r yourturnc10, exercise = TRUE}
 
@@ -378,12 +405,13 @@ babynames %>%
   geom_line(mapping = aes(x = year, y = n_children))
 ```
 
-### Your Turn C11
+### Your Turn C11 {data-continue-text="Continue to D1 When Prompted by Instructor"}
 
-Use `min_rank()` and `mutate()` to rank each row in `babynames` from largest `prop` to lowest `prop`.
+Replace the ____s below to use `min_rank()` and `mutate()` to rank each row in `babynames` from largest `prop` to lowest `prop`.
 
 ```{r yourturnc11, exercise = TRUE}
-
+babynames %>% 
+  ____(rank = ____(desc(____)))
 ```
 
 ```{r yourturnc11-solution}
@@ -391,47 +419,141 @@ babynames %>%
   mutate(rank = min_rank(desc(prop)))
 ```
 
-### Your Turn C12
+## (D) Polishing Plots
 
-Using `mutate()`, compute each name's rank by `prop` _within its year and sex_. 
-Then, using `summarize()` compute the median rank _for each combination of name and sex_, and arrange the results from highest median rank to lowest.
+### Your Turn D1 {data-continue-text="Continue to D2 When Prompted by Instructor"}
 
-Hint: Mary should be the first name in your result.
+`alpha` can be a number between 0 and 1. Replace the ____ below to experiment with `alpha` to figure out what it does.
 
-```{r yourturnc12, exercise = TRUE}
+Hint: Because it is a number, it should not be in quotes.
 
+```{r yourturnD1, exercise = TRUE}
+penguins %>%
+  ggplot(aes(x = flipper_length_mm)) +
+  geom_density(aes(fill = species), alpha = ____) 
+ 
 ```
 
-```{r yourturnc12-solution}
-babynames %>% 
-  group_by(year, sex) %>% 
-  mutate(rank = min_rank(desc(prop))) %>% 
-  group_by(name, sex) %>% 
-  summarise(score = median(rank)) %>% 
-  arrange(score)
+```{r yourturnD1-solution}
+penguins %>%
+  ggplot(aes(x = flipper_length_mm)) +
+  geom_density(aes(fill = species), alpha = .5) 
 ```
 
-## (D) Explore on Your Own
+
+### Your Turn D2 {data-continue-text="Continue to D3 When Prompted by Instructor"}
+
+`ggplot` has many built themes to change the look of your plot, that take the format of `theme_????`. Some themes you can experiment with include:
+
+  - `theme_classic()`
+  - `theme_dark()`
+  - `theme_minimal()`
+
+Replace the `theme_____()` below and give them a try!
+
+```{r yourturnD2, exercise = TRUE}
+penguins %>%
+  ggplot(aes(x = flipper_length_mm)) +
+  geom_density(aes(fill = species), alpha = .5) +
+  theme_____()
+  
+```
+
+
+```{r yourturnD2-solution}
+penguins %>%
+  ggplot(aes(x = flipper_length_mm)) +
+  geom_density(aes(fill = species), alpha = .5) +
+  theme_minimal()
+```
+
+### Your Turn D3 {data-continue-text="Continue to D4 When Prompted by Instructor"}
+
+`scale_fill_manual()` can be used to changed the `fill` of plots. Replace the ____ below to change the colors to NSU's colors. 
+
+Hint: NSU's colors are: 
+
+  - #003893
+  - #7c858c
+  - #F2A900
+  
+```{r yourturnD3, exercise = TRUE}
+penguins %>%
+  ggplot(aes(x = flipper_length_mm)) +
+  geom_density(aes(fill = species), alpha = .5) +
+  theme_minimal() +
+  scale_fill_manual(values = c("____", "____", "____"))
+```
+
+
+```{r yourturnD3-solution}
+penguins %>%
+  ggplot(aes(x = flipper_length_mm)) +
+  geom_density(aes(fill = species), alpha = .5) +
+  theme_minimal() +
+  scale_fill_manual(values = c("#003893", "#7c858c", "#F2A900")) 
+```
+
+### Your Turn D4 {data-continue-text="Continue to (E) Explore on Your Own When Prompted by Instructor"}
+
+Replace the ____s below to add the following labels to your plot:
+
+  - `x`: Flipper Length (mm)
+  - `y`: Density
+  - `title`: Gentoos Have the Longest Flippers
+  - `subtitle`: Distribution of penguin flipper lengths, by species
+  - `fill`: Species
+  - `caption`: Source: palmerpenguins R package
+  
+
+```{r yourturnD4, exercise = TRUE}
+penguins %>%
+  ggplot(aes(x = flipper_length_mm)) +
+  geom_density(aes(fill = species), alpha = .5) +
+  theme_minimal() +
+  scale_fill_manual(values = c("#003893", "#7c858c", "#F2A900")) +
+  labs(
+    x = "____",
+    y = "____",
+    title = "____",
+    subtitle = "____",
+    fill = "____",
+    caption = "____"
+  )
+```
+
+```{r yourturnD4-solution}
+penguins %>%
+  ggplot(aes(x = flipper_length_mm)) +
+  geom_density(aes(fill = species), alpha = .5) +
+  theme_minimal() +
+  scale_fill_manual(values = c("#003893", "#7c858c", "#F2A900"))  +
+    labs(
+    x = "Flipper Length (mm)",
+    y = "Density",
+    title = "Gentoos Have the Longest Flippers",
+    subtitle = "Distribution of penguin flipper lengths, by species",
+    fill = "Species",
+    caption = "Source: palmerpenguins R package"
+  )
+```
+
+## (E) Explore on Your Own
 
 Some example questions:
 
   - How has the popularity of your name changed?
   - Which names have become more or less popular over time?
-  - What happens when someone with a relatively rare becomes very famous (e.g., "Lebron" around 2003)?
+  - What happens when someone with a relatively rare name becomes very famous (e.g., Lebron, Madonna)?
   
-You can also try to change the non-data, visual elements of a plot you make. For example:
-
-  - Change the x, y, title, and subtitles.
-  - Change the color of your background or the appearance of the gridlines
-  - Try adding `theme_minimal()` to your plot. What other built-in themes are there?
-  
-Also, there are other data sets you can try exploring. For example:
+Some other data sets you can try exploring. For example:
 
   - `penguins`*
   - `diamonds`
   - `mtcars`
+  - `mpg`
 
-*This data set contains `NA`s. Can you figure out how math on `NA`'s works (or rather, doesn't) in R?
+*This data set contains `NA`s. Can you figure out how math on `NA`'s works (or doesn't) in R?
   
 ### Explore
   
